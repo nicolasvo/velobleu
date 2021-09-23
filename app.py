@@ -1,5 +1,6 @@
 import os
 import re
+import json
 import json5
 import requests
 
@@ -13,6 +14,14 @@ def get_stations():
     return stations
 
 def handler(event, context):
-    return { 
-        'stations' : get_stations()
+    return {
+        'statusCode': 200,
+        'headers': {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+        'body': json.dumps({
+            'stations': get_stations()
+        }),
+        'isBase64Encoded': False
     }
