@@ -1,8 +1,8 @@
 # velobleu
 
-This project fetches the velobleu bike stations name, coordinates, number of available bikes (ab), number of available parking slots (ap). It is deployed using AWS Lambda functions using container images in AWS ECR.
+This project fetches the velobleu bike stations name, coordinates, number of available bikes (ab), number of available parking slots (ap). It is deployed using Terraform, AWS Lambda and AWS ECR.
 
-# Steps
+## Steps
 
 1. Export `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
 2. `cd terraform`
@@ -10,6 +10,6 @@ This project fetches the velobleu bike stations name, coordinates, number of ava
 4. `terraform plan`
 5. `terraform apply`
 
-# TODO
+## TODO
 
 - At the moment, AWS API Gateway trigger is manually added. It needs to be declared in Terraform.
