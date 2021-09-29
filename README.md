@@ -1,6 +1,6 @@
 # velobleu
 
-This project fetches the velobleu bike stations name, coordinates, number of available bikes (ab), number of available parking slots (ap). It is deployed using Terraform, AWS Lambda and AWS ECR.
+This project fetches the velobleu bike stations name, coordinates, number of available bikes (ab), number of available parking slots (ap). It is deployed using Docker, Terraform, AWS Lambda, AWS ECR.
 
 ## Steps
 
