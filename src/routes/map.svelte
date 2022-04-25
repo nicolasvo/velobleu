@@ -1,6 +1,5 @@
 <script>
 	import { onMount } from 'svelte';
-	import * as L from 'leaflet';
 	import json5 from 'json5';
 
 	const getStations = async () => {
@@ -25,6 +24,8 @@
 	let map;
 
 	onMount(async () => {
+		const L = await import('leaflet');
+		
 		map = L.map('map').setView([43.67, 7.21], 13);
 		L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png ', {
 			attribution:
@@ -36,7 +37,7 @@
 
 		stations.forEach((station) => {
 			const marker = L.marker(station['latlng']).addTo(map);
-			marker.bindTooltip(`Free bikes: ${station["ab"]}<br>Free slots: ${station["ap"]}`);
+			marker.bindTooltip(`Free bikes: ${station['ab']}<br>Free slots: ${station['ap']}`);
 		});
 	});
 </script>
