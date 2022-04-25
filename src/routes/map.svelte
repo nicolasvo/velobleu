@@ -25,7 +25,7 @@
 
 	onMount(async () => {
 		const L = await import('leaflet');
-		
+
 		map = L.map('map').setView([43.67, 7.21], 13);
 		L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png ', {
 			attribution:
@@ -38,6 +38,12 @@
 		stations.forEach((station) => {
 			const marker = L.marker(station['latlng']).addTo(map);
 			marker.bindTooltip(`Free bikes: ${station['ab']}<br>Free slots: ${station['ap']}`);
+			if (station['ab'] == 0) {
+				marker._icon.classList.add('redmarker');
+			}
+			if (station['ap'] == 0) {
+				marker._icon.classList.add('pinkmarker');
+			}
 		});
 	});
 </script>

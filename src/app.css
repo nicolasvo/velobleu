@@ -2,3 +2,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+img.redmarker { filter: hue-rotate(150deg); }
+img.pinkmarker { filter: hue-rotate(280deg); }
