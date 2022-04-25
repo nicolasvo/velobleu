@@ -1,0 +1,14 @@
+version: '3'
+services:
+  oyster:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - .:/app/
+    ports:
+      - "8082:8080"
+      - "24678:24678"
+    stdin_open: true
+    tty: true
