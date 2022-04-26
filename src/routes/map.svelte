@@ -69,6 +69,6 @@
 
 <style>
 	#map {
-		height: 90vh;
+		height: 100vh;
 	}
 </style>
