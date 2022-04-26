@@ -1,6 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
 	import json5 from 'json5';
+	import { writable } from 'svelte/store';
+
+	export const coordinates = writable();
 
 	const getStations = async () => {
 		const match = await fetch(
@@ -22,9 +25,55 @@
 	};
 
 	let map;
+	// const getLocation = () => {
+	// 	console.log("eh?");
+	// 	navigator.geolocation.getCurrentPosition((position) => {
+	// 		console.log('hiho');
+	// 		const lat = position.coords.latitude;
+	// 		const lng = position.coords.longitude;
+	// 		console.log(position);
+	// 		return [lat, lng];
+	// 	});
+	// };
+
+	let options = {
+		enableHighAccuracy: true,
+		timeout: 5000,
+		maximumAge: 0
+	};
+
+	function success(pos) {
+		let crd = pos.coords;
+
+		console.log('Your current position is:');
+		console.log(`Latitude : ${crd.latitude}`);
+		console.log(`Longitude: ${crd.longitude}`);
+		console.log(`More or less ${crd.accuracy} meters.`);
+		$coordinates = crd.latitude;
+	}
+
+	function error(err) {
+		console.warn(`ERROR(${err.code}): ${err.message}`);
+	}
+
+	const getLocation = () => {
+		navigator.geolocation.getCurrentPosition(success, error, options);
+	};
 
 	onMount(async () => {
 		const L = await import('leaflet');
+
+		// if (navigator.geolocation) {
+		// 	navigator.geolocation.getCurrentPosition((position) => {
+		// 		const lat = position.coords.latitude;
+		// 		const lng = position.coords.longitude;
+		// 		// $coord = {
+		// 		// 	lat: lat,
+		// 		// 	lng: lng
+		// 		// };
+		// 	});
+		// } else {
+		// }
 
 		map = L.map('map').setView([43.67, 7.21], 13);
 		L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png ', {
@@ -65,6 +114,8 @@
 	<script src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
 </svelte:head>
 
+<button on:click={getLocation}>Button</button>
+<p>{$coordinates}</p>
 <div id="map" />
 
 <style>
