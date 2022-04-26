@@ -37,7 +37,7 @@
 
 		stations.forEach((station) => {
 			const marker = L.marker(station['latlng']).addTo(map);
-			marker.bindTooltip(`Free bikes: ${station['ab']}<br>Free slots: ${station['ap']}`);
+			marker.bindTooltip(`Bikes: ${station['ab']}<br>Slots: ${station['ap']}`);
 			if (station['ab'] == 0) {
 				marker._icon.classList.add('redmarker');
 			}
