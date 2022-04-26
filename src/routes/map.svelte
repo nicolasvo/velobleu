@@ -27,10 +27,10 @@
 		const L = await import('leaflet');
 
 		map = L.map('map').setView([43.67, 7.21], 13);
-		L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png ', {
+		L.tileLayer('https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png', {
+			maxZoom: 20,
 			attribution:
-				'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-			maxZoom: 18
+				'&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 		}).addTo(map);
 
 		const stations = await getStations().then((match) => json5.parse(match));
