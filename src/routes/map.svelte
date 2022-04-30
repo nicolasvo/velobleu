@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { writable } from 'svelte/store';
 	import json5 from 'json5';
 
 	const getStations = async () => {
@@ -23,7 +24,7 @@
 
 	let map;
 
-	onMount(async () => {
+	map = onMount(async () => {
 		const L = await import('leaflet');
 
 		map = L.map('map').setView([43.67, 7.21], 13);
@@ -32,6 +33,23 @@
 			attribution:
 				'&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 		}).addTo(map);
+
+		const command = L.control({ position: 'bottomright' });
+		command.onAdd = () => {
+			const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+			const button = L.DomUtil.create('a', 'leaflet-control-button', container);
+			button.innerHTML =
+				'<div class="flex justify-center items-center"><svg class="h-7" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M18.75 3.94L4.07 10.08c-.83.35-.81 1.53.02 1.85L9.43 14c.26.1.47.31.57.57l2.06 5.33c.32.84 1.51.86 1.86.03l6.15-14.67c.33-.83-.5-1.66-1.32-1.32z"/></svg></div>';
+			L.DomEvent.disableClickPropagation(button);
+			L.DomEvent.on(button, 'click', async () => {
+				await getLocation();
+			});
+
+			container.title = 'Show user location';
+
+			return container;
+		};
+		command.addTo(map);
 
 		const stations = await getStations().then((match) => json5.parse(match));
 
@@ -42,10 +60,31 @@
 				marker._icon.classList.add('redmarker');
 			}
 			if (station['ap'] == 0) {
-				marker._icon.classList.add('pinkmarker');
+				marker._icon.classList.add('greenmarker');
 			}
 		});
+
+		return map;
 	});
+
+	export const coordinates = writable();
+
+	let userMarker;
+
+	const getLocation = async () => {
+		await navigator.geolocation.getCurrentPosition((position) => {
+			const lat = position.coords.latitude;
+			const lng = position.coords.longitude;
+			$coordinates = [lat, lng];
+			if (userMarker != undefined) {
+				userMarker.removeFrom(map);
+			}
+			userMarker = L.marker($coordinates);
+			userMarker.addTo(map);
+			userMarker._icon.classList.add('pinkmarker');
+			map.setView($coordinates, 16);
+		});
+	};
 </script>
 
 <svelte:head>

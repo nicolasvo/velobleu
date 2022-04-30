@@ -3,5 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
-img.redmarker { filter: hue-rotate(150deg); }
-img.pinkmarker { filter: hue-rotate(280deg); }
+img.redmarker {
+    filter: hue-rotate(150deg);
+}
+
+img.greenmarker {
+    filter: hue-rotate(280deg);
+}
+
+img.pinkmarker {
+    filter: hue-rotate(100deg);
+}
+
+.golden path {
+    fill: gold;
+}
