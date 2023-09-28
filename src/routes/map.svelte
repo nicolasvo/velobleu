@@ -28,11 +28,29 @@
 		const L = await import('leaflet');
 
 		map = L.map('map').setView([43.67, 7.21], 13);
-		L.tileLayer('https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png', {
-			maxZoom: 20,
+		// https://leaflet-extras.github.io/leaflet-providers/preview/
+
+		L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
 			attribution:
-				'&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+				'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+			subdomains: 'abcd',
+			maxZoom: 20
 		}).addTo(map);
+
+		// L.tileLayer(
+		// 	'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+		// 	{
+		// 		maxZoom: 20,
+		// 		attribution:
+		// 			'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+		// 	}
+		// ).addTo(map);
+
+		// L.tileLayer('https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png', {
+		// 	maxZoom: 20,
+		// 	attribution:
+		// 		'&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+		// }).addTo(map);
 
 		const command = L.control({ position: 'bottomright' });
 		command.onAdd = () => {
@@ -98,7 +116,8 @@
 	<script
 		src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
 		integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-		crossorigin="">
+		crossorigin=""
+	>
 	</script>
 
 	<script src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
